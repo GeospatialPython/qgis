@@ -46,13 +46,13 @@
 		}
 		
 		function postLocation(e){
-			locationData = "{'type':'Point','coordinates: [
+			locationData = "{'type':'Point','coordinates: [";
 			locationData += e.latlng.lng;
 			locationData += ',';
 			locationData += e.latlng.lat;
 			locationData += ']}';
 			var xhr = new XMLHttpRequest();
-			myJSONURL = "https://api.myjson.com/bins/31igz"
+			myJSONURL = "https://api.myjson.com/bins/31igz";
   			xhr.open("PUT", myJSONURL, true);
   			xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   			// send the collected data as JSON
