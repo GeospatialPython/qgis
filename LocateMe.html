@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Leaflet mobile example</title>
+	<title>QGIS Python Cookbook Tracking Example</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -47,21 +47,28 @@
 		}
 		
 		function postLocation(e){
+			/** 
+			The variable 'myJSONURL' below is a URL from myJSON.com.
+			Post some dummy geoJSON there to create a new URL
+			with a unique id.  The code below will update that
+			geoJSON using a PUT request AJAX call.  You then
+			use the same URL to create a GeoJSON vector layer
+			in QGIS which updates each time the map extent changes.
+			Each time any client accesses the URL of this page,
+			the geoJSON is updated.
+			**/
+			myJSONURL = "https://api.myjson.com/bins/31igz";
 			locationData = {'type':'Point',
 			"coordinates": [e.latlng.lng, e.latlng.lat]};
 			var xhr = new XMLHttpRequest();
-			myJSONURL = "https://api.myjson.com/bins/31igz";
   			xhr.open("PUT", myJSONURL, true);
   			xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  			// send the collected data as JSON
-  			
+  			// update the collected data as JSON
   			xhr.send(JSON.stringify(locationData));	
-  			alert(JSON.stringify(locationData));
 		}
-
+		
 		map.on('locationfound', onLocationFound);
 		map.on('locationerror', onLocationError);
-
 		map.locate({setView: true, maxZoom: 16});
 	</script>
 </body>
