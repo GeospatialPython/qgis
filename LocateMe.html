@@ -39,6 +39,7 @@
 				.bindPopup("You are within " + radius + " meters from this point").openPopup();
 
 			L.circle(e.latlng, radius).addTo(map);
+			postLocation(e);
 		}
 
 		function onLocationError(e) {
