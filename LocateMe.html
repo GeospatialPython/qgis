@@ -35,7 +35,6 @@
 
 		function onLocationFound(e) {
 			var radius = e.accuracy / 2;
-			alert(e.latlng.lat);
 			L.marker(e.latlng).addTo(map)
 				.bindPopup("You are within " + radius + " meters from this point").openPopup();
 
@@ -44,6 +43,20 @@
 
 		function onLocationError(e) {
 			alert(e.message);
+		}
+		
+		function postLocation(e){
+			locationData = "{'type':'Point','coordinates: [
+			locationData += e.latlng.lng;
+			locationData += ',';
+			locationData += e.latlng.lat;
+			locationData += ']}';
+			var xhr = new XMLHttpRequest();
+			myJSONURL = "https://api.myjson.com/bins/31igz"
+  			xhr.open("PUT", myJSONURL, true);
+  			xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  			// send the collected data as JSON
+  			xhr.send(locationData);	
 		}
 
 		map.on('locationfound', onLocationFound);
