@@ -41,56 +41,78 @@
 	<b>Comment: </b><br/>
 	<textarea rows="4" cols="25">Enter a brief comment</textarea>
 	<br/>
-	<input type="submit" value="SEND">
+	<input type="button" value="SEND" onclick="sendData()">
 	</form>
 	</div>
 
 	<script>
-		var map = L.map('map');
+var map = L.map('map');
+var myJsonUrl = 'https://api.myjson.com/bins/3ztvz';
+var database = '';
+var lat = 0;
+var lon = 0;
 
-		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-			id: 'examples.map-i875mjb7'
-		}).addTo(map);
+L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    id: 'examples.map-i875mjb7'
+}).addTo(map);
 
-		function onLocationFound(e) {
-			var radius = e.accuracy / 2;
-			L.marker(e.latlng).addTo(map);
-			L.circle(e.latlng, radius).addTo(map);
-			postLocation(e);
-		}
+function onLocationFound(e) {
+    var radius = e.accuracy / 2;
+    L.marker(e.latlng).addTo(map);
+    L.circle(e.latlng, radius).addTo(map);
+    lat = e.latlng.lat;
+    lon = e.latlng.lng;
+    retrieveData();
+}
 
-		function onLocationError(e) {
-			alert(e.message);
-		}
-		
-		function postLocation(e){
-			/** 
-			The variable 'myJSONURL' below is a URL from myJSON.com.
-			Post some dummy geoJSON there to create a new URL
-			with a unique id.  The code below will update that
-			geoJSON using a PUT request AJAX call.  You then
-			use the same URL to create a GeoJSON vector layer
-			in QGIS which updates each time the map extent changes.
-			Each time any client accesses the URL of this page,
-			the geoJSON is updated.
-			**/
-			myJSONURL = "https://api.myjson.com/bins/31igz";
-			locationData = {'type':'Point',
-			"coordinates": [e.latlng.lng, e.latlng.lat]};
-			var xhr = new XMLHttpRequest();
-  			xhr.open("PUT", myJSONURL, true);
-  			xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  			// update the collected data as JSON
-  			xhr.send(JSON.stringify(locationData));	
-		}
-		
-		map.on('locationfound', onLocationFound);
-		map.on('locationerror', onLocationError);
-		map.locate({setView: true, maxZoom: 16});
+function onLocationError(e) {
+    alert(e.message);
+}
+
+function retrieveData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", myJsonUrl, false);
+    xhr.send(null);
+    data = xhr.responseText;
+    database = JSON.parse(data);
+    alert(data);
+}
+
+function sendData() {
+    /**
+    observation = {
+        "type": "Feature",
+            "properties": {
+            "NAME": document.getElementById("name").value,
+                "DATE": document.getElementById("date").value,
+                "COMMENT": document.getElementById("comment").value
+        },
+            "geometry": {
+            "type": "Point",
+                "coordinates": [lon, lat]
+        }
+    };**/
+    //alert(JSON.stringify(observation));
+    alert("hello");
+    /**
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", myJsonUrl, true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    // update the collected data as JSON
+    xhr.send(JSON.stringify(locationData));
+    **/
+}
+
+map.on('locationfound', onLocationFound);
+map.on('locationerror', onLocationError);
+map.locate({
+    setView: true,
+    maxZoom: 16
+});
 	</script>
 </body>
 </html>
