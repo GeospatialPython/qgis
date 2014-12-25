@@ -33,7 +33,7 @@
 	</div>
 	<div id="map"></div>
 	<div id="form">
-	<form>
+	<form id="obs">
 	<b>Name: </b><br/>
 	<input type="text" placeholder="Enter your name"><br/>
 	<b>Date: </b><br/>
@@ -83,12 +83,15 @@ function retrieveData() {
 }
 
 function sendData() {
+    frm_name = document.getElementById("name");
+    frm_date = document.getElementById("date");
+    frm_comment = document.getElementById("comment");
     observation = {
         "type": "Feature",
             "properties": {
-            "NAME": document.getElementById("name").value,
-                "DATE": document.getElementById("date").value,
-                "COMMENT": document.getElementById("comment").value
+            "NAME": frm_name.value,
+                "DATE": frm_date.value,
+                "COMMENT": frm_comment.value
         },
             "geometry": {
             "type": "Point",
