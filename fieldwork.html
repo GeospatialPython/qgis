@@ -79,7 +79,7 @@ function retrieveData() {
     xhr.send(null);
     data = xhr.responseText;
     database = JSON.parse(data);
-    alert(data);
+    //alert(data);
 }
 
 function sendData() {
@@ -99,14 +99,11 @@ function sendData() {
         }
     };
     database["features"].push(observation)
-    alert(JSON.stringify(database));
-    /**
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", myJsonUrl, true);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     // update the collected data as JSON
-    xhr.send(JSON.stringify(locationData));
-    **/
+    xhr.send(JSON.stringify(database));
 }
 
 map.on('locationfound', onLocationFound);
