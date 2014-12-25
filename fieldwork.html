@@ -98,7 +98,8 @@ function sendData() {
                 "coordinates": [lon, lat]
         }
     };
-    alert(JSON.stringify(observation));
+    database["features"].push(observation)
+    alert(JSON.stringify(database));
     /**
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", myJsonUrl, true);
