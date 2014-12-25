@@ -1,1 +1,76 @@
-<!--new-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>QGIS Python Cookbook Field Data Collection Example</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			background-color: #000000;
+		}
+		html, body, #map {
+			height: 75%;
+		}
+	</style>
+</head>
+<body>
+	<div id="map"></div>
+
+	<script>
+		var map = L.map('map');
+
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-i875mjb7'
+		}).addTo(map);
+
+		function onLocationFound(e) {
+			var radius = e.accuracy / 2;
+			L.marker(e.latlng).addTo(map)
+				.bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+			L.circle(e.latlng, radius).addTo(map);
+			postLocation(e);
+		}
+
+		function onLocationError(e) {
+			alert(e.message);
+		}
+		
+		function postLocation(e){
+			/** 
+			The variable 'myJSONURL' below is a URL from myJSON.com.
+			Post some dummy geoJSON there to create a new URL
+			with a unique id.  The code below will update that
+			geoJSON using a PUT request AJAX call.  You then
+			use the same URL to create a GeoJSON vector layer
+			in QGIS which updates each time the map extent changes.
+			Each time any client accesses the URL of this page,
+			the geoJSON is updated.
+			**/
+			myJSONURL = "https://api.myjson.com/bins/31igz";
+			locationData = {'type':'Point',
+			"coordinates": [e.latlng.lng, e.latlng.lat]};
+			var xhr = new XMLHttpRequest();
+  			xhr.open("PUT", myJSONURL, true);
+  			xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  			// update the collected data as JSON
+  			xhr.send(JSON.stringify(locationData));	
+		}
+		
+		map.on('locationfound', onLocationFound);
+		map.on('locationerror', onLocationError);
+		map.locate({setView: true, maxZoom: 16});
+	</script>
+</body>
+</html>
