@@ -83,7 +83,6 @@ function retrieveData() {
 }
 
 function sendData() {
-    /**
     observation = {
         "type": "Feature",
             "properties": {
@@ -95,9 +94,8 @@ function sendData() {
             "type": "Point",
                 "coordinates": [lon, lat]
         }
-    };**/
-    //alert(JSON.stringify(observation));
-    alert("hello");
+    };
+    alert(JSON.stringify(observation));
     /**
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", myJsonUrl, true);
