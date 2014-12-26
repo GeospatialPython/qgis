@@ -30,14 +30,14 @@
 <body onload="retrieveData()">
 	<div>
 	<h3>Field Data Collection Example "Database" Reset</h3>	
-	<font color="#009933">QGIS Python Programming Cookbook</font>
+	<font color="#009933">QGIS Python Programming Cookbook</font><br/>
 	This page resets the simple MyJSON.com storage for this cookbook example to a single geojson feature to fix the inevitable 
 	<a href="http://www.joelonsoftware.com/articles/fog0000000319.html">Shlemiel problem</a> with this simple design.  This approach
-	keeps this example as simple and understandable as possible.
+	keeps this example as simple and understandable as possible.<br/>
 	</div>
 	<div id="form">
 	<form id="dbReset">
-	<input type="button" value="RESET" onclick="sendData()">
+	<input type="button" value="RESET" onclick="sendData()"><br/>
 	</form>
 	<b>Current stored geojson contents:</b><br/>
 	</div>
@@ -55,7 +55,7 @@ function retrieveData() {
     xhr.send(null);
     data = xhr.responseText;
     info = document.getElementById("currentDb");
-    info.innerHTML = "<pre>" + responseText + "</pre>";
+    info.innerHTML = "<pre>" + data + "</pre>";
 }
 
 function sendData() {
