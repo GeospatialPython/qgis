@@ -2,6 +2,8 @@
 
 # https://github.com/GeospatialPython/qgis/blob/gh-pages/change-detection.zip?raw=true
 
+# Run this script in the QGIS Python Console
+
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from qgis.analysis import *
