@@ -214,3 +214,10 @@ table.attrs tr td:first-child {
   color: black;
   font: normal medium sans-serif;
 }
+
+#logo {
+position: absolute;
+bottom: 0;
+right: 0;
+padding: 2
+}
